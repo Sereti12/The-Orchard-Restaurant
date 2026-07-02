@@ -421,11 +421,11 @@ The RDS database instance itself was then created with the following configurati
 | **Public Access** | Disabled |
 | **Security Group** | `the-orchard-vpc-data-sg` |
 
-**Free Tier Constraint**
-
-The Free Tier template does not support a **Dev/Test** environment or a **Multi-AZ** deployment—only a **Single DB Instance** is available. Recent changes to AWS account eligibility rules made the Dev/Test tier unavailable for this account, so the Free Tier template was used instead.
-
-In a production environment, the **Dev/Test** or **Production** template should be used with a **Multi-AZ DB instance** (or **Multi-AZ DB cluster**) to match the architecture shown in the diagram.
+> **Free Tier Constraint**
+>
+> The **Free Tier** template does not support a **Dev/Test** environment or a **Multi-AZ** deployment—only a **Single DB Instance** is available. Recent changes to AWS account eligibility rules made the Dev/Test tier unavailable for this account, so the Free Tier template was used instead.
+>
+> In a production environment, the **Dev/Test** or **Production** template should be used with a **Multi-AZ DB instance** (or **Multi-AZ DB cluster**) to match the architecture shown in the diagram.
 
 
 ### 6.11 Target Group and Application Load Balancer
