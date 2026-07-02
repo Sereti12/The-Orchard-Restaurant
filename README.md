@@ -238,6 +238,11 @@ A second route table was created for the public subnets.
 This route allows resources in the public subnets to communicate with the internet.
 
 
+<p align="center">
+  <img src="Image 2 Public Route.png" alt="Architecture Diagram" width="1000"/>
+</p>
+
+*Figure 2: Public route table configuration, routing all outbound traffic (0.0.0.0/0) to the Internet Gateway*
 
 
 
