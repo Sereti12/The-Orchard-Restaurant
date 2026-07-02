@@ -394,7 +394,58 @@ This allows administrators to manage the instances securely without exposing SSH
 
 *Figure 6: The completed IAM role with both policies — S3 access and AmazonSSMManagedInstanceCore — attached.*
 
+## 6.10 Database Creation and Configuration
 
+The database stores every recipe and piece of information submitted by site visitors. Before creating a highly available RDS instance, a **DB subnet group** is required—a named collection of subnets in the VPC that RDS can place the database and its standby copy into. It is essential for Multi-AZ deployments.
+
+| Setting | Value |
+|----------|-------|
+| **Name** | `the-orchard-db-subnet-group` |
+| **Description** | Subnet group for the RDS database |
+| **VPC** | `the-orchard-vpc` |
+| **Availability Zones** | `eu-north-1a`, `eu-north-1b` |
+| **Subnets** | `the-orchid-vpc-datasubnet1`, `the-orchid-vpc-datasubnet2` |
+
+The RDS database instance itself was then created with the following configuration:
+
+| Setting | Value |
+|----------|-------|
+| **Name** | `the-orchard-db` |
+| **Engine** | MySQL |
+| **Template** | Free Tier |
+| **Availability & Durability** | Single DB instance |
+| **Credentials** | Self-managed username and password |
+| **Instance Class** | Burstable classes — `db.t3.micro` |
+| **VPC** | `the-orchard-vpc` |
+| **Subnet Group** | `the-orchard-db-subnet-group` |
+| **Public Access** | Disabled |
+| **Security Group** | `the-orchard-vpc-data-sg` |
+
+**Free Tier Constraint**
+
+The Free Tier template does not support a **Dev/Test** environment or a **Multi-AZ** deployment—only a **Single DB Instance** is available. Recent changes to AWS account eligibility rules made the Dev/Test tier unavailable for this account, so the Free Tier template was used instead.
+
+In a production environment, the **Dev/Test** or **Production** template should be used with a **Multi-AZ DB instance** (or **Multi-AZ DB cluster**) to match the architecture shown in the diagram.
+
+
+## 6.11 Target Group and Application Load Balancer
+
+The load balancer is the single point of contact for client traffic. It distributes incoming requests across multiple targets—in this case, the EC2 instances in both Availability Zones—which improves fault tolerance and keeps the application available if an individual instance becomes unavailable.
+
+A target group was created first to define which resources the load balancer forwards traffic to.
+
+| Setting | Value |
+|----------|-------|
+| **Target Type** | Instances |
+| **Name** | `the-orchard-tg` |
+| **VPC** | `the-orchard-vpc` |
+| **Protocol Version** | HTTP1 |
+| **Health Check Path** | `/health.html` |
+| **Healthy Threshold** | 3 |
+| **Unhealthy Threshold** | 2 |
+| **Interval** | 10 seconds |
+
+An internet-facing **Application Load Balancer** was then created in `the-orchard-vpc`, listening for incoming traffic and forwarding requests to the `the-orchard-tg` target group.
 
 
 
