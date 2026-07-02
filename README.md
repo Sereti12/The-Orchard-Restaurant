@@ -453,6 +453,110 @@ An internet-facing **Application Load Balancer** was then created in `the-orchar
 
 *Figure 7: Application Load Balancer configuration — internet-facing, deployed in the-orchard-vpc.*
 
+| Setting | Value |
+|----------|-------|
+| **Subnets** | `the-orchid-vpc-publicsubnet1`, `the-orchid-vpc-publicsubnet2` |
+| **Security Group** | `the-orchard-vpc-alb-sg` |
+| **Listener** | HTTP :80 → `the-orchard-tg` |
+
+---
+
+## 6.12 Launch Template
+
+Before configuring Auto Scaling, a **Launch Template** was created to define exactly how new instances should be configured on launch.
+
+| Setting | Value |
+|----------|-------|
+| **Name** | `the-orchard-app-lt` |
+| **AMI** | Amazon Linux 2023 |
+| **Instance Type** | `t2.micro` |
+| **Security Group** | `the-orchard-vpc-app-sg` |
+| **IAM Instance Profile** | The IAM role from **Section 6.9** (S3 read access + Systems Manager) |
+
+The following user data script runs automatically on first boot, installing and configuring the web stack before pulling the application files from Amazon S3:
+
+```bash
+#!/bin/bash
+
+# Update the package repository
+dnf update -y
+
+# Install the necessary packages
+dnf install -y httpd php php-mysqli mariadb105
+
+# Start and enable the Apache service
+systemctl start httpd
+systemctl enable httpd
+
+# Add the ec2-user to the apache group
+usermod -a -G apache ec2-user
+
+# Set ownership and permissions for the web directory
+chown -R ec2-user:apache /var/www
+chmod 2775 /var/www
+
+# Set permissions for directories and files within /var/www
+find /var/www -type d -exec chmod 2775 {} \;
+find /var/www -type f -exec chmod 0664 {} \;
+
+# Copy files from the S3 bucket to the web directory
+aws s3 cp s3://s3://the-orchid-app-sourcecode /var/www/html --recursive
+```
+
+---
+
+## 6.13 Auto Scaling Group
+
+An Auto Scaling Group was configured using the Launch Template above.
+
+<p align="center">
+  <img src="Img 12 Lt.png" alt="Architecture Diagram" width="1000"/>
+</p>
+
+*Figure 11: Auto Scaling Group configuration, referencing the-orchard-app-lt launch template..*
+
+The Auto Scaling Group was configured with the following settings:
+
+| Setting | Value |
+|----------|-------|
+| **VPC** | `the-orchard-vpc` |
+| **Subnets** | `the-orchid-vpc-appsubnet1`, `the-orchid-vpc-appsubnet2` |
+| **Target Group** | `the-orchard-tg` |
+| **Health Checks** | ELB health checks enabled |
+
+<p align="center">
+  <img src="Img 13 autoscaling.png" alt="Architecture Diagram" width="1000"/>
+</p>
+
+*Figure 11: Auto Scaling Group csuccessfully created.*
+
+## 7. Testing and Validation
+
+With the DNS name of the load balancer and the health-check file path appended, the application loaded successfully, confirming that the Application Load Balancer, Target Group, and Auto Scaling Group were all configured and integrated correctly.
+
+<p align="center">
+  <img src="Img 14 appload.png" alt="Architecture Diagram" width="1000"/>
+</p>
+
+*Figure 12: The application loading successfully through the Application Load Balancer's DNS name.*
+
+Several test recipe submissions were made through the site to mimic real customer activity. 
+
+<p align="center">
+  <img src="img 15 submission.png" alt="Architecture Diagram" width="1000"/>
+</p>
+
+*Figure 13: A test recipe submission through the application's front end.*
+
+After submitting, the data was retrieved back from the RDS database and displayed on the page, confirming the application, database, and IAM permissions were all working end to end:
+
+<p align="center">
+  <img src="img 15 submission.png" alt="Architecture Diagram" width="1000"/>
+</p>
+
+*Figure 13: A test recipe submission through the application's front end.*
+
+
 
 
 
