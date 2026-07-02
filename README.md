@@ -68,15 +68,15 @@ Serverless services are still used where appropriate—most notably **Amazon S3*
 
 ---
 
-# 4. Architecture Components
+## 4. Architecture Components
 
 This section explains the purpose of every major component in the architecture before walking through the implementation.
 
-## 4.1 Network — Amazon VPC
+### 4.1 Network — Amazon VPC
 
 A custom **Amazon VPC** hosts every resource in the project. The VPC spans **two Availability Zones** and contains **six subnets**, allowing public-facing resources, application servers, and the database tier to remain isolated at the network level.
 
-## 4.2 Subnets
+### 4.2 Subnets
 
 The architecture uses six subnets:
 
@@ -88,13 +88,13 @@ The architecture uses six subnets:
 
 This follows AWS's standard **three-tier subnet architecture**.
 
-## 4.3 Internet Gateway
+### 4.3 Internet Gateway
 
 The **Internet Gateway (IGW)** is attached to the VPC and enables communication between resources inside the VPC and the public internet.
 
 Without an Internet Gateway, resources inside the VPC cannot communicate with the internet.
 
-## 4.4 NAT Gateway
+### 4.4 NAT Gateway
 
 A **NAT Gateway**, deployed in a public subnet, allows resources in private subnets to initiate outbound internet connections while preventing unsolicited inbound traffic.
 
@@ -104,7 +104,7 @@ Typical use cases include:
 - Installing software packages
 - Retrieving security patches
 
-## 4.5 Compute — Amazon EC2, Launch Templates & Auto Scaling
+### 4.5 Compute — Amazon EC2, Launch Templates & Auto Scaling
 
 Two Linux web servers run across separate Availability Zones.
 
@@ -122,7 +122,7 @@ An **Auto Scaling Group (ASG)** uses this template to:
 - Replace unhealthy instances automatically
 - Distribute instances across both Availability Zones
 
-## 4.6 Load Balancing — Application Load Balancer
+### 4.6 Load Balancing — Application Load Balancer
 
 An internet-facing **Application Load Balancer (ALB)** serves as the single entry point into the application.
 
@@ -133,7 +133,7 @@ It:
 - Routes traffic only to healthy EC2 instances
 - Distributes traffic across multiple Availability Zones
 
-## 4.7 Storage — Amazon S3
+### 4.7 Storage — Amazon S3
 
 Amazon S3 stores the application's source files, including:
 
@@ -144,13 +144,13 @@ Amazon S3 stores the application's source files, including:
 
 Keeping application code separate from compute resources allows new EC2 instances to automatically retrieve the latest version during startup, making the architecture more loosely coupled.
 
-## 4.8 Database — Amazon RDS (MySQL)
+### 4.8 Database — Amazon RDS (MySQL)
 
 An **Amazon RDS for MySQL** instance stores every recipe submitted through the application.
 
 The architecture supports a **Multi-AZ deployment**, allowing a standby database in another Availability Zone to automatically take over if the primary database becomes unavailable.
 
-## 4.9 Security Groups
+### 4.9 Security Groups
 
 Three security groups provide instance-level firewall protection using a **security group chaining** approach.
 
@@ -162,7 +162,7 @@ Three security groups provide instance-level firewall protection using a **secur
 
 This ensures that each layer only accepts traffic from the layer immediately in front of it.
 
-## 4.10 IAM Roles and Policies
+### 4.10 IAM Roles and Policies
 
 IAM roles provide temporary credentials to AWS resources while IAM policies define the permissions granted.
 
@@ -173,7 +173,7 @@ The EC2 instances are assigned an IAM role containing:
 - **Custom S3 access policy** – Allows instances to retrieve application files from Amazon S3 during boot.
 - **AmazonSSMManagedInstanceCore** – Enables communication with AWS Systems Manager.
 
-## 4.11 AWS Systems Manager — Session Manager
+### 4.11 AWS Systems Manager — Session Manager
 
 AWS Systems Manager **Session Manager** provides secure browser-based shell access to EC2 instances without requiring:
 
@@ -192,7 +192,7 @@ Benefits include:
 
 ---
 
-# 5. Prerequisites
+## 5. Prerequisites
 
 Before completing this project, you should have:
 
@@ -204,7 +204,7 @@ Before completing this project, you should have:
 
 ---
 
-# 6. Implementation Walkthrough
+## 6. Implementation Walkthrough
 
 This section documents the infrastructure exactly as it was built in the AWS Management Console.
 
@@ -219,7 +219,7 @@ An Amazon VPC was created with the following configuration.
 
 The `/16` CIDR block provides approximately **65,536 IP addresses**, leaving significant room for future expansion beyond the six subnets used in this project.
 
-## 6.2 Internet Gateway
+### 6.2 Internet Gateway
 
 An Internet Gateway was created and attached to the VPC.
 
