@@ -461,7 +461,7 @@ An internet-facing **Application Load Balancer** was then created in `the-orchar
 
 ---
 
-## 6.12 Launch Template
+### 6.12 Launch Template
 
 Before configuring Auto Scaling, a **Launch Template** was created to define exactly how new instances should be configured on launch.
 
@@ -503,9 +503,7 @@ find /var/www -type f -exec chmod 0664 {} \;
 aws s3 cp s3://s3://the-orchid-app-sourcecode /var/www/html --recursive
 ```
 
----
-
-## 6.13 Auto Scaling Group
+### 6.13 Auto Scaling Group
 
 An Auto Scaling Group was configured using the Launch Template above.
 
@@ -551,14 +549,22 @@ Several test recipe submissions were made through the site to mimic real custome
 After submitting, the data was retrieved back from the RDS database and displayed on the page, confirming the application, database, and IAM permissions were all working end to end:
 
 <p align="center">
-  <img src="img 15 submission.png" alt="Architecture Diagram" width="1000"/>
+  <img src="submitted.png" alt="Architecture Diagram" width="1000"/>
 </p>
 
-*Figure 13: A test recipe submission through the application's front end.*
+*Figure 14: Submitted recipe data retrieved from the RDS database and rendered on the page.*
 
+## 8. High Availability and Failover Testing
 
+### 8.1 Application-Tier Failover
 
+To test high availability at the application tier, the health-check file was deleted from one EC2 instance so that the load balancer could no longer confirm the instance was healthy.
 
+<p align="center">
+  <img src="img 16 healthcheck.png" alt="Architecture Diagram" width="1000"/>
+</p>
+
+*Figure 15: The health-check file removed from an instance, causing it to fail its ALB health check.*
 
 
 
