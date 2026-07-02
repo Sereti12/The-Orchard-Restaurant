@@ -294,7 +294,7 @@ With this route in place, resources in the private subnets can initiate outbound
 >
 > Unlike the public subnets, the private subnets do **not** have a direct route to the Internet Gateway. All outbound internet traffic is routed through the NAT Gateway, preserving the security of the private network while still allowing access to external services when required.
 
----
+
 
 ### 6.7 Security Groups
 
