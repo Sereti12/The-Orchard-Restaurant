@@ -372,3 +372,45 @@ Public access blocking was enabled because the application source code and other
 >
 > In a production environment, **versioning should be enabled**. It preserves previous versions of objects, providing protection against accidental deletion, unintended overwrites, application errors, and simplifying data recovery when changes need to be rolled back.
 
+<p align="center">
+  <img src="Image 7 app sourcecode.png" alt="Architecture Diagram" width="1000"/>
+</p>
+
+*Figure 5: Application source files and assets uploaded to the S3 bucket.*
+
+## 6.9 IAM Roles and Policies
+
+An IAM role is required so that when the Auto Scaling Group launches new EC2 instances, each instance can fetch the application source code from S3 and communicate with Systems Manager. The role has two policies attached: an S3 access policy, and the AWS-managed `AmazonSSMManagedInstanceCore` policy for Session Manager.
+
+The Systems Manager policy was attached using the AWS-managed role designed for this purpose. In the IAM console, under **Roles**, choosing **AWS service** and then **EC2 role for Systems Manager** pre-selects the `AmazonSSMManagedInstanceCore` policy.
+
+Rather than granting broad administrative permissions, this policy provides only the permissions required for the Systems Manager agent running on the EC2 instance to register with AWS Systems Manager, establish secure Session Manager connections, receive management commands, and report instance information back to AWS. This allows administrators to manage the instances securely without exposing SSH (port 22) to the internet or maintaining SSH key pairs.
+
+<p align="center">
+  <img src="Image 8 EC2 role.png" alt="Architecture Diagram" width="1000"/>
+</p>
+
+*Figure 6: The completed IAM role with both policies — S3 access and AmazonSSMManagedInstanceCore — attached.*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
