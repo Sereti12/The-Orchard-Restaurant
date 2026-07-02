@@ -280,7 +280,97 @@ Because the NAT Gateway is internet-facing, an **Elastic IP (EIP)** was allocate
 
 *Figure 3: NAT Gateway created in a public subnet with an associated Elastic IP address*
 
+## 6.6 Private Route Table (Main Route Table)
 
+To enable resources in the private subnets to access the internet for software updates, package installations, and other outbound traffic, the VPC's **main route table** (which is implicitly associated with the application and data subnets) was updated with the following route:
 
+| Destination | Target |
+|-------------|--------|
+| `0.0.0.0/0` | NAT Gateway |
 
+With this route in place, resources in the private subnets can initiate outbound connections through the **NAT Gateway** while remaining inaccessible from the public internet.
+
+> **Note**
+>
+> Unlike the public subnets, the private subnets do **not** have a direct route to the Internet Gateway. All outbound internet traffic is routed through the NAT Gateway, preserving the security of the private network while still allowing access to external services when required.
+
+---
+
+## 6.7 Security Groups
+
+Three security groups were created to enforce network access controls at the instance level. Together, they implement a **security group chaining** model, ensuring that each tier accepts traffic only from the layer immediately in front of it.
+
+### a) Application Load Balancer Security Group
+
+| Setting | Value |
+|----------|-------|
+| **Name** | `the-orchard-vpc-alb-sg` |
+| **Description** | Allow HTTP traffic from the internet to the Application Load Balancer |
+| **VPC** | `the-orchard-vpc` |
+
+#### Inbound Rules
+
+| Type | Protocol | Port | Source |
+|------|----------|------|--------|
+| HTTP | TCP | `80` | `0.0.0.0/0` (Anywhere) |
+
+<p align="center">
+  <img src="Image 6 SG.png" alt="Architecture Diagram" width="1000"/>
+</p>
+
+*Figure 4: Security group creation in the AWS Console, showing the inbound HTTP rule for the ALB security group*
+
+### b) Application Security Group
+
+| Setting | Value |
+|----------|-------|
+| **Name** | `the-orchard-vpc-app-sg` |
+| **Description** | Allow HTTP traffic from the Application Load Balancer to the application servers |
+| **VPC** | `the-orchard-vpc` |
+
+#### Inbound Rules
+
+| Type | Protocol | Port | Source |
+|------|----------|------|--------|
+| HTTP | TCP | `80` | `the-orchard-vpc-alb-sg` |
+
+Only the Application Load Balancer is permitted to send HTTP traffic to the EC2 instances. This prevents users from accessing the application servers directly over the internet.
+
+---
+
+### c) Database Security Group
+
+| Setting | Value |
+|----------|-------|
+| **Name** | `the-orchard-vpc-data-sg` |
+| **Description** | Allow MySQL traffic from the application servers to the database |
+| **VPC** | `the-orchard-vpc` |
+
+#### Inbound Rules
+
+| Type | Protocol | Port | Source |
+|------|----------|------|--------|
+| MySQL/Aurora | TCP | `3306` | `the-orchard-vpc-app-sg` |
+
+The database accepts connections **only** from EC2 instances associated with the application security group, ensuring that it remains isolated from both the public internet and other resources within the VPC.
+
+---
+
+## 6.8 Amazon S3 Bucket for Application Source Code
+
+An Amazon S3 bucket was created to store the application's source code and deployment assets.
+
+| Setting | Value |
+|----------|-------|
+| **Name** | `the-orchid-app-sourcecode` |
+| **Block Public Access** | Enabled |
+| **Versioning** | Disabled |
+
+Public access blocking was enabled because the application source code and other objects stored in the bucket are confidential and should not be accessible directly from the internet.
+
+> **Versioning Note**
+>
+> Versioning was intentionally left **disabled** for this learning project to minimise storage costs. While Amazon S3 Versioning itself has no additional charge, storing multiple versions of objects increases storage consumption over time.
+>
+> In a production environment, **versioning should be enabled**. It preserves previous versions of objects, providing protection against accidental deletion, unintended overwrites, application errors, and simplifying data recovery when changes need to be rolled back.
 
