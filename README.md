@@ -565,14 +565,118 @@ To test high availability at the application tier, the health-check file was del
 </p>
 
 *Figure 15: The health-check file removed from an instance, causing it to fail its ALB health check.*
+Refreshing the application continued to work throughout the test because the load balancer routed traffic to the remaining healthy instance in the other Availability Zone.
+As shown below, the Auto Scaling Group detected the unhealthy instance, terminated it, and automatically launched a replacement, confirming that both the Application Load Balancer and Auto Scaling Group were correctly configured for self-healing.
+<p align="center">
+  <img src="img 18 autoscaling.png" alt="Architecture Diagram" width="1000"/>
+</p>
+
+*Figure 17: Auto Scaling activity history showing the unhealthy instance terminated and a replacement instance launched automatically.*
+
+### 8.2 Database-Tier Failover (Not Performed)
+
+The architecture diagram specifies a **Multi-AZ** Amazon RDS deployment so that a standby database in a second Availability Zone can automatically take over if the primary database fails.
+
+As noted in **Section 6.10**, the AWS Free Tier does not support Multi-AZ deployments, so this database instance was deployed as a **Single-AZ** instance. Consequently, this failover test could not be performed.
+
+## 9. Lessons Learned
+
+Throughout this project, several important design and operational lessons became clear.
+
+### Security Group Chaining
+
+Security-group chaining (allowing traffic only from another security group, rather than a CIDR range) is a clean way to enforce the principle of least privilege between tiers without hardcoding IP addresses that can change.
+
+### AWS Free Tier Constraints
+
+AWS Free Tier constraints (such as the lack of Multi-AZ RDS support, the absence of the Dev/Test RDS template, and NAT Gateway billing) shape real design decisions. Understanding which trade-offs are being made, and why, matters just as much as the build itself.
+
+### AWS Systems Manager Session Manager
+
+Systems Manager Session Manager removes the need for SSH key pairs, bastion hosts, and open inbound ports entirely, providing a more secure operational model than traditional SSH access.
+
+### Manual Console-Based Provisioning
+
+Building resources manually in the AWS Management Console, one at a time, makes every dependency between services—such as route tables, security groups, IAM roles, and DB subnet groups—very explicit. It is an excellent way to learn AWS, but not how infrastructure would typically be deployed or maintained in a production environment.
 
 
+## 10. Limitations
+
+Although the project successfully meets its objectives, several limitations remain.
+
+### Manual Console-Based Provisioning
+
+Every resource in this project—the VPC, six subnets, route tables, NAT Gateway, security groups, IAM roles, RDS instance, Application Load Balancer, Launch Template, and Auto Scaling Group—was created manually in the AWS Management Console. This approach is time-consuming, difficult to reproduce consistently, and prone to human error. Infrastructure as Code, using Terraform or AWS CloudFormation, would allow the entire environment to be defined in version-controlled files, deployed consistently, and reviewed like any other code. This is the single biggest limitation of the current build and the highest priority for a future revision.
+
+### AWS Free Tier Limitations
+
+The AWS Free Tier does not support a Multi-AZ RDS deployment or the Dev/Test RDS template. As a result, the database in this build is deployed as a Single-AZ instance rather than the Multi-AZ design shown in the architecture diagram, and the database failover test described in Section 8.2 could not be performed.
+
+### Single NAT Gateway
+
+The architecture calls for one NAT Gateway per Availability Zone to provide full redundancy. Only one was deployed to avoid the additional hourly cost, meaning the private subnets would lose outbound internet access if the Availability Zone hosting the NAT Gateway experienced a failure.
+
+### No HTTPS
+
+The Application Load Balancer listens on HTTP (port 80) only. There is no TLS certificate or HTTPS listener, so traffic between the client and the load balancer is not encrypted and would not be suitable for handling sensitive or personal data.
+
+### Self-Managed Database Credentials
+
+The RDS instance uses a self-managed username and password rather than AWS Secrets Manager. As a result, credentials are not automatically rotated and must be managed manually.
+
+### Monitoring and Alerting
+
+The project relies on Application Load Balancer and Auto Scaling health checks for self-healing, but no Amazon CloudWatch alarms or notifications have been configured to alert an administrator when issues occur.
 
 
+## 11. Future Improvements
+
+The following enhancements would move the project closer to a production-ready architecture.
+
+### Infrastructure as Code
+
+Rebuild the environment using Terraform or AWS CloudFormation so it can be created, updated, and destroyed consistently through version-controlled Infrastructure as Code.
+
+### Serverless Companion Project
+
+Publish a companion serverless implementation of the same business case using services such as Amazon API Gateway, AWS Lambda, and Amazon DynamoDB to compare both architectural approaches.
+
+### HTTPS
+
+Add an HTTPS listener to the Application Load Balancer using an AWS Certificate Manager (ACM) certificate and redirect all HTTP traffic to HTTPS.
+
+### AWS Secrets Manager
+
+Move database credentials into AWS Secrets Manager and enable automatic credential rotation.
+
+### Multi-AZ Database
+
+Deploy a Multi-AZ RDS instance (or Multi-AZ DB cluster) and repeat the database failover test outside the AWS Free Tier.
+
+### NAT Gateway Redundancy
+
+Deploy a second NAT Gateway so that each Availability Zone has its own outbound internet gateway.
+
+### Monitoring and Notifications
+
+Configure Amazon CloudWatch alarms and Amazon SNS notifications for key operational metrics, including unhealthy host count, CPU utilisation, and database connections.
+
+### CI/CD Pipeline
+
+Implement a CI/CD pipeline so application updates are deployed automatically instead of being uploaded manually to Amazon S3.
+
+### AWS WAF
+
+Deploy AWS WAF in front of the Application Load Balancer to provide protection against common web exploits.
 
 
+## 12. Conclusion
 
+This project set out to build a realistic, highly available web application on AWS using a genuine business scenario as the driver rather than a generic tutorial. The result is a working, multi-Availability Zone application backed by an Application Load Balancer, an Auto Scaling Group, and an Amazon RDS database, secured with layered security groups and least-privilege IAM roles, and administered without exposing SSH ports through AWS Systems Manager Session Manager.
 
+The application-tier failover test described in Section 8.1 confirmed that the architecture is capable of self-healing, with the Application Load Balancer automatically routing traffic to healthy instances while the Auto Scaling Group replaced the failed instance.
+
+Equally important, the limitations identified in Section 10—particularly the reliance on manual console-based provisioning—provide a clear roadmap for evolving this project into a more production-ready solution. The future improvements outlined in Section 11 represent the next stage of that evolution and reflect the continuous improvement mindset required in cloud engineering.
 
 
 
