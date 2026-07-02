@@ -244,9 +244,41 @@ This route allows resources in the public subnets to communicate with the intern
 
 *Figure 2: Public route table configuration, routing all outbound traffic (0.0.0.0/0) to the Internet Gateway*
 
+## 6.4 Subnet Configuration
+
+Six subnets were created across two Availability Zones.
+
+| Subnet Name | IPv4 CIDR Block | Availability Zone |
+|--------------|----------------|-------------------|
+| `the-orchid-vpc-publicsubnet1` | `10.0.1.0/24` | `eu-north-1a` |
+| `the-orchid-vpc-publicsubnet2` | `10.0.2.0/24` | `eu-north-1b` |
+| `the-orchid-vpc-appsubnet1` | `10.0.10.0/24` | `eu-north-1a` |
+| `the-orchid-vpc-appsubnet2` | `10.0.11.0/24` | `eu-north-1b` |
+| `the-orchid-vpc-datasubnet1` | `10.0.20.0/24` | `eu-north-1a` |
+| `the-orchid-vpc-datasubnet2` | `10.0.21.0/24` | `eu-north-1b` |
 
 
 
+The two public subnets were associated with the `public-rt` route table created in **Section 6.3**, allowing resources within those subnets to communicate with the internet through the Internet Gateway.
+
+
+## 6.5 NAT Gateway
+
+A **NAT Gateway** was deployed in one of the public subnets to provide outbound internet access for resources located in the private application and database subnets.
+
+Because the NAT Gateway is internet-facing, an **Elastic IP (EIP)** was allocated and associated with it.
+
+> **Cost Optimization**
+>
+> The architecture diagram illustrates **two NAT Gateways** (one per Availability Zone), which is AWS's recommended production architecture for high availability and fault tolerance.
+>
+> For this project, however, **only one NAT Gateway** was deployed to reduce operating costs. NAT Gateways incur **hourly charges** and are **not included in the AWS Free Tier**, making a single NAT Gateway a practical compromise for a learning environment.
+
+<p align="center">
+  <img src="Image 4 NAT gateway.png" alt="Architecture Diagram" width="1000"/>
+</p>
+
+*Figure 3: NAT Gateway created in a public subnet with an associated Elastic IP address*
 
 
 
