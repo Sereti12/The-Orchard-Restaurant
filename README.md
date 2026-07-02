@@ -64,9 +64,6 @@ Although the IT department recognised the benefits of a serverless architecture,
 
 Serverless services are still used where appropriate—most notably **Amazon S3** for storing application files.
 
-> **Note:** A companion project implementing the same business scenario using a fully serverless AWS architecture will be published separately.
-
----
 
 ## 4. Architecture Components
 
@@ -190,7 +187,6 @@ Benefits include:
 - Session logging and auditing
 - Reduced attack surface
 
----
 
 ## 5. Prerequisites
 
@@ -202,13 +198,11 @@ Before completing this project, you should have:
 - Working knowledge of IP addressing and CIDR notation
 - Familiarity with IAM roles and IAM policies
 
----
-
 ## 6. Implementation Walkthrough
 
 This section documents the infrastructure exactly as it was built in the AWS Management Console.
 
-## 6.1 VPC and Subnet Configuration
+### 6.1 VPC and Subnet Configuration
 
 An Amazon VPC was created with the following configuration.
 
@@ -229,7 +223,7 @@ An Internet Gateway was created and attached to the VPC.
 
 Its purpose is to enable communication between public resources in the VPC and the internet.
 
-## 6.3 Route Tables
+### 6.3 Route Tables
 
 Every VPC includes a default **main route table**, which initially allows only internal VPC communication.
 
