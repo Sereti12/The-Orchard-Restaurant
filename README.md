@@ -378,7 +378,7 @@ Public access blocking was enabled because the application source code and other
 
 *Figure 5: Application source files and assets uploaded to the S3 bucket.*
 
-## 6.9 IAM Roles and Policies
+### 6.9 IAM Roles and Policies
 
 An IAM role is required so that when the Auto Scaling Group launches new EC2 instances, each instance can fetch the application source code from S3 and communicate with Systems Manager. The role has two policies attached: an S3 access policy, and the AWS-managed `AmazonSSMManagedInstanceCore` policy for Session Manager.
 
@@ -394,7 +394,7 @@ This allows administrators to manage the instances securely without exposing SSH
 
 *Figure 6: The completed IAM role with both policies — S3 access and AmazonSSMManagedInstanceCore — attached.*
 
-## 6.10 Database Creation and Configuration
+### 6.10 Database Creation and Configuration
 
 The database stores every recipe and piece of information submitted by site visitors. Before creating a highly available RDS instance, a **DB subnet group** is required—a named collection of subnets in the VPC that RDS can place the database and its standby copy into. It is essential for Multi-AZ deployments.
 
@@ -428,7 +428,7 @@ The Free Tier template does not support a **Dev/Test** environment or a **Multi-
 In a production environment, the **Dev/Test** or **Production** template should be used with a **Multi-AZ DB instance** (or **Multi-AZ DB cluster**) to match the architecture shown in the diagram.
 
 
-## 6.11 Target Group and Application Load Balancer
+### 6.11 Target Group and Application Load Balancer
 
 The load balancer is the single point of contact for client traffic. It distributes incoming requests across multiple targets—in this case, the EC2 instances in both Availability Zones—which improves fault tolerance and keeps the application available if an individual instance becomes unavailable.
 
@@ -447,7 +447,11 @@ A target group was created first to define which resources the load balancer for
 
 An internet-facing **Application Load Balancer** was then created in `the-orchard-vpc`, listening for incoming traffic and forwarding requests to the `the-orchard-tg` target group.
 
+<p align="center">
+  <img src="Image 11 ALB.png" alt="Architecture Diagram" width="1000"/>
+</p>
 
+*Figure 7: Application Load Balancer configuration — internet-facing, deployed in the-orchard-vpc.*
 
 
 
