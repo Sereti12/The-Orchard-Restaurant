@@ -32,8 +32,11 @@ Customer recipe submissions are securely stored in an **Amazon RDS for MySQL** d
 
 ## 2. Architecture Diagram
 
+<p align="center">
+  <img src="The Vegan Project.png" alt="Architecture Diagram" width="1000"/>
+</p>
 
-
+*Figure 1: High-level architecture. The application runs across two Availability Zones, sitting behind an Application Load Balancer in a public subnet. NAT Gateways in the public subnets give the private application and data subnets outbound internet access. IAM roles and security groups control which resources can talk to each other.*
 
 
 
