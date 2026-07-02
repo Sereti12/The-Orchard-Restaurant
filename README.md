@@ -69,7 +69,7 @@ Serverless services are still used where appropriate—most notably **Amazon S3*
 
 This section explains the purpose of every major component in the architecture before walking through the implementation.
 
-### 4.1 Network — Amazon VPC
+### 4.1 Network: Amazon VPC
 
 A custom **Amazon VPC** hosts every resource in the project. The VPC spans **two Availability Zones** and contains **six subnets**, allowing public-facing resources, application servers, and the database tier to remain isolated at the network level.
 
@@ -101,7 +101,7 @@ Typical use cases include:
 - Installing software packages
 - Retrieving security patches
 
-### 4.5 Compute — Amazon EC2, Launch Templates & Auto Scaling
+### 4.5 Compute: Amazon EC2, Launch Templates & Auto Scaling
 
 Two Linux web servers run across separate Availability Zones.
 
@@ -119,7 +119,7 @@ An **Auto Scaling Group (ASG)** uses this template to:
 - Replace unhealthy instances automatically
 - Distribute instances across both Availability Zones
 
-### 4.6 Load Balancing — Application Load Balancer
+### 4.6 Load Balancing: Application Load Balancer
 
 An internet-facing **Application Load Balancer (ALB)** serves as the single entry point into the application.
 
@@ -130,7 +130,7 @@ It:
 - Routes traffic only to healthy EC2 instances
 - Distributes traffic across multiple Availability Zones
 
-### 4.7 Storage — Amazon S3
+### 4.7 Storage: Amazon S3
 
 Amazon S3 stores the application's source files, including:
 
@@ -141,7 +141,7 @@ Amazon S3 stores the application's source files, including:
 
 Keeping application code separate from compute resources allows new EC2 instances to automatically retrieve the latest version during startup, making the architecture more loosely coupled.
 
-### 4.8 Database — Amazon RDS (MySQL)
+### 4.8 Database: Amazon RDS (MySQL)
 
 An **Amazon RDS for MySQL** instance stores every recipe submitted through the application.
 
