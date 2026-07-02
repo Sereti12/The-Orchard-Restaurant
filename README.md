@@ -384,10 +384,12 @@ An IAM role is required so that when the Auto Scaling Group launches new EC2 ins
 
 The Systems Manager policy was attached using the AWS-managed role designed for this purpose. In the IAM console, under **Roles**, choosing **AWS service** and then **EC2 role for Systems Manager** pre-selects the `AmazonSSMManagedInstanceCore` policy.
 
-Rather than granting broad administrative permissions, this policy provides only the permissions required for the Systems Manager agent running on the EC2 instance to register with AWS Systems Manager, establish secure Session Manager connections, receive management commands, and report instance information back to AWS. This allows administrators to manage the instances securely without exposing SSH (port 22) to the internet or maintaining SSH key pairs.
+Rather than granting broad administrative permissions, this policy provides only the permissions required for the Systems Manager agent running on the EC2 instance to register with AWS Systems Manager, establish secure Session Manager connections, receive management commands, and report instance information back to AWS.
+
+This allows administrators to manage the instances securely without exposing SSH (port 22) to the internet or maintaining SSH key pairs, while aligning with AWS security best practices by using temporary IAM credentials instead of long-lived access keys.
 
 <p align="center">
-  <img src="Image 8 EC2 role.png" alt="Architecture Diagram" width="1000"/>
+  <img src="Image 10 IAM roles.png" alt="Architecture Diagram" width="1000"/>
 </p>
 
 *Figure 6: The completed IAM role with both policies — S3 access and AmazonSSMManagedInstanceCore — attached.*
