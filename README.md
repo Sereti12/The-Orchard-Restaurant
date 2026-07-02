@@ -597,7 +597,7 @@ Systems Manager Session Manager removes the need for SSH key pairs, bastion host
 
 ### Manual Console-Based Provisioning
 
-Building resources manually in the AWS Management Console, one at a time, makes every dependency between services—such as route tables, security groups, IAM roles, and DB subnet groups—very explicit. It is an excellent way to learn AWS, but not how infrastructure would typically be deployed or maintained in a production environment.
+Building resources manually in the AWS Management Console, one at a time, makes every dependency between services such as route tables, security groups, IAM roles, and DB subnet groups very explicit. It is an excellent way to learn AWS, but not how infrastructure would typically be deployed or maintained in a production environment.
 
 
 ## 10. Limitations
@@ -606,7 +606,7 @@ Although the project successfully meets its objectives, several limitations rema
 
 ### Manual Console-Based Provisioning
 
-Every resource in this project—the VPC, six subnets, route tables, NAT Gateway, security groups, IAM roles, RDS instance, Application Load Balancer, Launch Template, and Auto Scaling Group—was created manually in the AWS Management Console. This approach is time-consuming, difficult to reproduce consistently, and prone to human error. Infrastructure as Code, using Terraform or AWS CloudFormation, would allow the entire environment to be defined in version-controlled files, deployed consistently, and reviewed like any other code. This is the single biggest limitation of the current build and the highest priority for a future revision.
+Every resource in this project (the VPC, six subnets, route tables, NAT Gateway, security groups, IAM roles, RDS instance, Application Load Balancer, Launch Template, and Auto Scaling Group) was created manually in the AWS Management Console. This approach is time-consuming, difficult to reproduce consistently, and prone to human error. Infrastructure as Code, using Terraform or AWS CloudFormation, would allow the entire environment to be defined in version-controlled files, deployed consistently, and reviewed like any other code. This is the single biggest limitation of the current build and the highest priority for a future revision.
 
 ### AWS Free Tier Limitations
 
@@ -676,7 +676,7 @@ This project set out to build a realistic, highly available web application on A
 
 The application-tier failover test described in Section 8.1 confirmed that the architecture is capable of self-healing, with the Application Load Balancer automatically routing traffic to healthy instances while the Auto Scaling Group replaced the failed instance.
 
-Equally important, the limitations identified in Section 10—particularly the reliance on manual console-based provisioning—provide a clear roadmap for evolving this project into a more production-ready solution. The future improvements outlined in Section 11 represent the next stage of that evolution and reflect the continuous improvement mindset required in cloud engineering.
+Equally important, the limitations identified in Section 10, particularly the reliance on manual console-based provisioning, provide a clear roadmap for evolving this project into a more production-ready solution. The future improvements outlined in Section 11 represent the next stage of that evolution and reflect the continuous improvement mindset required in cloud engineering.
 
 
 
