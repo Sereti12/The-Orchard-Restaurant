@@ -445,7 +445,7 @@ The RDS database instance itself was then created with the following configurati
 
 ### 6.11 Target Group and Application Load Balancer
 
-The load balancer is the single point of contact for client traffic. It distributes incoming requests across multiple targets—in this case, the EC2 instances in both Availability Zones—which improves fault tolerance and keeps the application available if an individual instance becomes unavailable.
+The load balancer is the single point of contact for client traffic. It distributes incoming requests across multiple targets,in this case, the EC2 instances in both Availability Zones, which improves fault tolerance and keeps the application available if an individual instance becomes unavailable.
 
 A target group was created first to define which resources the load balancer forwards traffic to.
 
