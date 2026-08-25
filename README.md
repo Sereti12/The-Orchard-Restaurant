@@ -212,7 +212,7 @@ An Amazon VPC was created with the following configuration.
 
 | **IPv4 CIDR Block** | `10.0.0.0/16` |
 <p align="center">
-  <img src="C1 VPC creation.png" alt="Architecture Diagram" width="1000"/>
+  <img src="C1 VPC creation.PNG" alt="Architecture Diagram" width="1000"/>
 </p>
 
 *Figure 2: Provisioning the isolated custom AWS VPC (the-orchard-vpc) with a /16 IPv4 CIDR block (10.0.0.0/16).*
