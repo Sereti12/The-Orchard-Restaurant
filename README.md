@@ -231,6 +231,8 @@ An Internet Gateway was created and attached to the VPC.
   <img src="C1 IGW.png" alt="Architecture Diagram" width="1000"/>
 </p>
 
+*Figure 2: Internet Gateway details showing the-orchard-vpc-igw (igw-0725493059114c540) in an Attached state, successfully bound to the-orchard-vpc (vpc-0391a0353940c5c45) to enable public internet communication..*
+
 Its purpose is to enable communication between public resources in the VPC and the internet.
 
 ### 6.3 Route Tables
@@ -247,12 +249,11 @@ A second route table was created for the public subnets.
 
 This route allows resources in the public subnets to communicate with the internet.
 
-
 <p align="center">
-  <img src="Image 2 Public Route.png" alt="Architecture Diagram" width="1000"/>
+  <img src="C1 PRT.png" alt="Architecture Diagram" width="1000"/>
 </p>
 
-*Figure 2: Public route table configuration, routing all outbound traffic (0.0.0.0/0) to the Internet Gateway*
+*Figure 3: Public route table configuration, routing all outbound traffic (0.0.0.0/0) to the Internet Gateway*
 
 ### 6.4 Subnet Configuration
 
@@ -260,18 +261,22 @@ Six subnets were created across two Availability Zones.
 
 | Subnet Name | IPv4 CIDR Block | Availability Zone |
 |--------------|----------------|-------------------|
-| `the-orchid-vpc-publicsubnet1` | `10.0.1.0/24` | `eu-north-1a` |
-| `the-orchid-vpc-publicsubnet2` | `10.0.2.0/24` | `eu-north-1b` |
-| `the-orchid-vpc-appsubnet1` | `10.0.10.0/24` | `eu-north-1a` |
-| `the-orchid-vpc-appsubnet2` | `10.0.11.0/24` | `eu-north-1b` |
-| `the-orchid-vpc-datasubnet1` | `10.0.20.0/24` | `eu-north-1a` |
-| `the-orchid-vpc-datasubnet2` | `10.0.21.0/24` | `eu-north-1b` |
+| `the-orchard-vpc-public-subnet1` | `10.0.1.0/24` | `eu-north-1a` |
+| `the-orchard-vpc-public-subnet2` | `10.0.2.0/24` | `eu-north-1b` |
+| `the-orchard-vpc-app-subnet1` | `10.0.10.0/24` | `eu-north-1a` |
+| `the-orchard-vpc-app-subnet2` | `10.0.11.0/24` | `eu-north-1b` |
+| `the-orchard-vpc-data-subnet1` | `10.0.20.0/24` | `eu-north-1a` |
+| `the-orchard-vpc-data-subnet2` | `10.0.21.0/24` | `eu-north-1b` |
 
 
 
 The two public subnets were associated with the `public-rt` route table created in **Section 6.3**, allowing resources within those subnets to communicate with the internet through the Internet Gateway.
 
+<p align="center">
+  <img src="C1 subnets.png" alt="Architecture Diagram" width="1000"/>
+</p>
 
+*Figure 4: Subnet layout for the-orchard-vpc showing six provisioned subnets across public, application, and data tiers with /24 IPv4 CIDR allocations (10.0.1.0/24 to 10.0.21.0/24) establishing a highly available, multi-tier architecture.*
 ### 6.5 NAT Gateway
 
 A **NAT Gateway** was deployed in one of the public subnets to provide outbound internet access for resources located in the private application and database subnets.
