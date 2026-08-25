@@ -407,7 +407,7 @@ This allows administrators to manage the instances securely without exposing SSH
   <img src="Image 10 IAM roles.png" alt="Architecture Diagram" width="1000"/>
 </p>
 
-*Figure 8: The completed IAM role with both policies — S3 access and AmazonSSMManagedInstanceCore — attached.*
+*Figure 8: The completed IAM role with both policies, S3 access and AmazonSSMManagedInstanceCore, attached.*
 
 ### 6.10 Database Creation and Configuration
 
