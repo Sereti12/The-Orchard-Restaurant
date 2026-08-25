@@ -419,7 +419,7 @@ The database stores every recipe and piece of information submitted by site visi
 | **Description** | Subnet group for the RDS database |
 | **VPC** | `the-orchard-vpc` |
 | **Availability Zones** | `eu-north-1a`, `eu-north-1b` |
-| **Subnets** | `the-orchid-vpc-datasubnet1`, `the-orchid-vpc-datasubnet2` |
+| **Subnets** | `the-orchard-vpc-data-subnet1`, `the-orchid-vpc-data-subnet2` |
 
 The RDS database instance itself was then created with the following configuration:
 
