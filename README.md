@@ -333,7 +333,7 @@ Three security groups were created to enforce network access controls at the ins
   <img src="Image 6 SG.png" alt="Architecture Diagram" width="1000"/>
 </p>
 
-*Figure 4: Security group creation in the AWS Console, showing the inbound HTTP rule for the ALB security group*
+*Figure 6: Security group creation in the AWS Console, showing the inbound HTTP rule for the ALB security group*
 
 #### b) Application Security Group
 
