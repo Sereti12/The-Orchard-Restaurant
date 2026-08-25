@@ -215,7 +215,7 @@ An Amazon VPC was created with the following configuration.
   <img src="C1 VPC creation.png" alt="Architecture Diagram" width="1000"/>
 </p>
 
-*Figure 1: Provisioning the isolated custom AWS VPC (the-orchard-vpc) with a /16 IPv4 CIDR block (10.0.0.0/16).*
+*Figure 2: Provisioning the isolated custom AWS VPC (the-orchard-vpc) with a /16 IPv4 CIDR block (10.0.0.0/16).*
 
 The `/16` CIDR block provides approximately **65,536 IP addresses**, leaving significant room for future expansion beyond the six subnets used in this project.
 
@@ -231,7 +231,7 @@ An Internet Gateway was created and attached to the VPC.
   <img src="C1 IGW.png" alt="Architecture Diagram" width="1000"/>
 </p>
 
-*Figure 2: Internet Gateway details showing the-orchard-vpc-igw (igw-0725493059114c540) in an Attached state, successfully bound to the-orchard-vpc (vpc-0391a0353940c5c45) to enable public internet communication..*
+*Figure 3: Internet Gateway details showing the-orchard-vpc-igw (igw-0725493059114c540) in an Attached state, successfully bound to the-orchard-vpc (vpc-0391a0353940c5c45) to enable public internet communication..*
 
 Its purpose is to enable communication between public resources in the VPC and the internet.
 
@@ -253,7 +253,7 @@ This route allows resources in the public subnets to communicate with the intern
   <img src="C1 PRT.png" alt="Architecture Diagram" width="1000"/>
 </p>
 
-*Figure 3: Public route table configuration, routing all outbound traffic (0.0.0.0/0) to the Internet Gateway*
+*Figure 4: Public route table configuration, routing all outbound traffic (0.0.0.0/0) to the Internet Gateway*
 
 ### 6.4 Subnet Configuration
 
@@ -276,7 +276,7 @@ The two public subnets were associated with the `public-rt` route table created 
   <img src="C1 subnets.png" alt="Architecture Diagram" width="1000"/>
 </p>
 
-*Figure 4: Subnet layout for the-orchard-vpc showing six provisioned subnets across public, application, and data tiers with /24 IPv4 CIDR allocations (10.0.1.0/24 to 10.0.21.0/24) establishing a highly available, multi-tier architecture.*
+*Figure 5: Subnet layout for the-orchard-vpc showing six provisioned subnets across public, application, and data tiers with /24 IPv4 CIDR allocations (10.0.1.0/24 to 10.0.21.0/24) establishing a highly available, multi-tier architecture.*
 ### 6.5 NAT Gateway
 
 A **NAT Gateway** was deployed in one of the public subnets to provide outbound internet access for resources located in the private application and database subnets.
@@ -293,7 +293,7 @@ Because the NAT Gateway is internet-facing, an **Elastic IP (EIP)** was allocate
   <img src="Image 4 NAT gateway.png" alt="Architecture Diagram" width="1000"/>
 </p>
 
-*Figure 5: NAT Gateway created in a public subnet with an associated Elastic IP address*
+*Figure 6: NAT Gateway created in a public subnet with an associated Elastic IP address*
 
 ### 6.6 Private Route Table (Main Route Table)
 
@@ -333,7 +333,7 @@ Three security groups were created to enforce network access controls at the ins
   <img src="Image 6 SG.png" alt="Architecture Diagram" width="1000"/>
 </p>
 
-*Figure 6: Security group creation in the AWS Console, showing the inbound HTTP rule for the ALB security group*
+*Figure 7: Security group creation in the AWS Console, showing the inbound HTTP rule for the ALB security group*
 
 #### b) Application Security Group
 
@@ -391,7 +391,7 @@ Public access blocking was enabled because the application source code and other
   <img src="Image 7 app sourcecode.png" alt="Architecture Diagram" width="1000"/>
 </p>
 
-*Figure 7: Application source files and assets uploaded to the S3 bucket.*
+*Figure 8: Application source files and assets uploaded to the S3 bucket.*
 
 ### 6.9 IAM Roles and Policies
 
@@ -407,7 +407,7 @@ This allows administrators to manage the instances securely without exposing SSH
   <img src="Image 10 IAM roles.png" alt="Architecture Diagram" width="1000"/>
 </p>
 
-*Figure 8: The completed IAM role with both policies, S3 access and AmazonSSMManagedInstanceCore, attached.*
+*Figure 9: The completed IAM role with both policies, S3 access and AmazonSSMManagedInstanceCore, attached.*
 
 ### 6.10 Database Creation and Configuration
 
@@ -466,7 +466,7 @@ An internet-facing **Application Load Balancer** was then created in `the-orchar
   <img src="Image 11 ALB.png" alt="Architecture Diagram" width="1000"/>
 </p>
 
-*Figure 9: Application Load Balancer configuration — internet-facing, deployed in the-orchard-vpc.*
+*Figure 10: Application Load Balancer configuration — internet-facing, deployed in the-orchard-vpc.*
 
 | Setting | Value |
 |----------|-------|
@@ -526,7 +526,7 @@ An Auto Scaling Group was configured using the Launch Template above.
   <img src="Img 12 Lt.png" alt="Architecture Diagram" width="1000"/>
 </p>
 
-*Figure 10: Auto Scaling Group configuration, referencing the-orchard-app-lt launch template..*
+*Figure 11: Auto Scaling Group configuration, referencing the-orchard-app-lt launch template..*
 
 The Auto Scaling Group was configured with the following settings:
 
@@ -541,7 +541,7 @@ The Auto Scaling Group was configured with the following settings:
   <img src="Img 13 autoscaling.png" alt="Architecture Diagram" width="1000"/>
 </p>
 
-*Figure 11: Auto Scaling Group csuccessfully created.*
+*Figure 12: Auto Scaling Group csuccessfully created.*
 
 ## 7. Testing and Validation
 
@@ -551,7 +551,7 @@ With the DNS name of the load balancer and the health-check file path appended, 
   <img src="Img 14 appload.png" alt="Architecture Diagram" width="1000"/>
 </p>
 
-*Figure 12: The application loading successfully through the Application Load Balancer's DNS name.*
+*Figure 13: The application loading successfully through the Application Load Balancer's DNS name.*
 
 Several test recipe submissions were made through the site to mimic real customer activity. 
 
@@ -559,7 +559,7 @@ Several test recipe submissions were made through the site to mimic real custome
   <img src="img 15 submission.png" alt="Architecture Diagram" width="1000"/>
 </p>
 
-*Figure 13: A test recipe submission through the application's front end.*
+*Figure 14: A test recipe submission through the application's front end.*
 
 After submitting, the data was retrieved back from the RDS database and displayed on the page, confirming the application, database, and IAM permissions were all working end to end:
 
@@ -567,7 +567,7 @@ After submitting, the data was retrieved back from the RDS database and displaye
   <img src="submitted.png" alt="Architecture Diagram" width="1000"/>
 </p>
 
-*Figure 14: Submitted recipe data retrieved from the RDS database and rendered on the page.*
+*Figure 15: Submitted recipe data retrieved from the RDS database and rendered on the page.*
 
 ## 8. High Availability and Failover Testing
 
@@ -579,7 +579,7 @@ To test high availability at the application tier, the health-check file was del
   <img src="img 16 healthcheck.png" alt="Architecture Diagram" width="1000"/>
 </p>
 
-*Figure 15: The health-check file removed from an instance, causing it to fail its ALB health check.*
+*Figure 16: The health-check file removed from an instance, causing it to fail its ALB health check.*
 Refreshing the application continued to work throughout the test because the load balancer routed traffic to the remaining healthy instance in the other Availability Zone.
 As shown below, the Auto Scaling Group detected the unhealthy instance, terminated it, and automatically launched a replacement, confirming that both the Application Load Balancer and Auto Scaling Group were correctly configured for self-healing.
 <p align="center">
