@@ -1,4 +1,4 @@
-# The Orchard Restaurant
+The-Orchard-Restaurant# The Orchard Restaurant
 
 ## 1. Project Overview
 
@@ -209,7 +209,13 @@ An Amazon VPC was created with the following configuration.
 | Setting | Value |
 |----------|-------|
 | **Name** | `the-orchard-vpc` |
+
 | **IPv4 CIDR Block** | `10.0.0.0/16` |
+<p align="center">
+  <img src="C1 VPC creation.png" alt="Architecture Diagram" width="1000"/>
+</p>
+
+*Figure 1: Provisioning the isolated custom AWS VPC (the-orchard-vpc) with a /16 IPv4 CIDR block (10.0.0.0/16).*
 
 The `/16` CIDR block provides approximately **65,536 IP addresses**, leaving significant room for future expansion beyond the six subnets used in this project.
 
@@ -220,6 +226,10 @@ An Internet Gateway was created and attached to the VPC.
 | Setting | Value |
 |----------|-------|
 | **Name** | `the-orchard-vpc-igw` |
+
+<p align="center">
+  <img src="C1 IGW.png" alt="Architecture Diagram" width="1000"/>
+</p>
 
 Its purpose is to enable communication between public resources in the VPC and the internet.
 
