@@ -411,7 +411,7 @@ This allows administrators to manage the instances securely without exposing SSH
 
 ### 6.10 Database Creation and Configuration
 
-The database stores every recipe and piece of information submitted by site visitors. Before creating a highly available RDS instance, a **DB subnet group** is required—a named collection of subnets in the VPC that RDS can place the database and its standby copy into. It is essential for Multi-AZ deployments.
+The database stores every recipe and piece of information submitted by site visitors. Before creating a highly available RDS instance, a **DB subnet group** is required. This is a named collection of subnets in the VPC that RDS can place the database and its standby copy into. It is essential for Multi-AZ deployments.
 
 | Setting | Value |
 |----------|-------|
