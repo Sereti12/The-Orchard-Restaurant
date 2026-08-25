@@ -293,7 +293,7 @@ Because the NAT Gateway is internet-facing, an **Elastic IP (EIP)** was allocate
   <img src="Image 4 NAT gateway.png" alt="Architecture Diagram" width="1000"/>
 </p>
 
-*Figure 3: NAT Gateway created in a public subnet with an associated Elastic IP address*
+*Figure 5: NAT Gateway created in a public subnet with an associated Elastic IP address*
 
 ### 6.6 Private Route Table (Main Route Table)
 
