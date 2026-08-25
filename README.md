@@ -228,7 +228,7 @@ An Internet Gateway was created and attached to the VPC.
 | **Name** | `the-orchard-vpc-igw` |
 
 <p align="center">
-  <img src="C1 IGW.png" alt="Architecture Diagram" width="1000"/>
+  <img src="C1 IGW.PNG" alt="Architecture Diagram" width="1000"/>
 </p>
 
 *Figure 3: Internet Gateway details showing the-orchard-vpc-igw (igw-0725493059114c540) in an Attached state, successfully bound to the-orchard-vpc (vpc-0391a0353940c5c45) to enable public internet communication..*
@@ -250,7 +250,7 @@ A second route table was created for the public subnets.
 This route allows resources in the public subnets to communicate with the internet.
 
 <p align="center">
-  <img src="C1 PRT.png" alt="Architecture Diagram" width="1000"/>
+  <img src="C1 PRT.PNG" alt="Architecture Diagram" width="1000"/>
 </p>
 
 *Figure 4: Public route table configuration, routing all outbound traffic (0.0.0.0/0) to the Internet Gateway*
@@ -273,7 +273,7 @@ Six subnets were created across two Availability Zones.
 The two public subnets were associated with the `public-rt` route table created in **Section 6.3**, allowing resources within those subnets to communicate with the internet through the Internet Gateway.
 
 <p align="center">
-  <img src="C1 subnets.png" alt="Architecture Diagram" width="1000"/>
+  <img src="C1 subnets.PNG" alt="Architecture Diagram" width="1000"/>
 </p>
 
 *Figure 5: Subnet layout for the-orchard-vpc showing six provisioned subnets across public, application, and data tiers with /24 IPv4 CIDR allocations (10.0.1.0/24 to 10.0.21.0/24) establishing a highly available, multi-tier architecture.*
@@ -290,7 +290,7 @@ Because the NAT Gateway is internet-facing, an **Elastic IP (EIP)** was allocate
 > For this project, however, **only one NAT Gateway** was deployed to reduce operating costs. NAT Gateways incur **hourly charges** and are **not included in the AWS Free Tier**, making a single NAT Gateway a practical compromise for a learning environment.
 
 <p align="center">
-  <img src="Image 4 NAT gateway.png" alt="Architecture Diagram" width="1000"/>
+  <img src="Image 4 NAT gateway.PNG" alt="Architecture Diagram" width="1000"/>
 </p>
 
 *Figure 6: NAT Gateway created in a public subnet with an associated Elastic IP address*
