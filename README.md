@@ -391,7 +391,7 @@ Public access blocking was enabled because the application source code and other
   <img src="Image 7 app sourcecode.png" alt="Architecture Diagram" width="1000"/>
 </p>
 
-*Figure 5: Application source files and assets uploaded to the S3 bucket.*
+*Figure 7: Application source files and assets uploaded to the S3 bucket.*
 
 ### 6.9 IAM Roles and Policies
 
