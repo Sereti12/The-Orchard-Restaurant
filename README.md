@@ -228,7 +228,7 @@ An Internet Gateway was created and attached to the VPC.
 | **Name** | `the-orchard-vpc-igw` |
 
 <p align="center">
-  <img src="C1 IGW.PNG" alt="Architecture Diagram" width="1000"/>
+  <img src="C1 IGW.png" alt="Architecture Diagram" width="1000"/>
 </p>
 
 *Figure 3: Internet Gateway details showing the-orchard-vpc-igw (igw-0725493059114c540) in an Attached state, successfully bound to the-orchard-vpc (vpc-0391a0353940c5c45) to enable public internet communication..*
