@@ -290,7 +290,7 @@ Because the NAT Gateway is internet-facing, an **Elastic IP (EIP)** was allocate
 > For this project, however, **only one NAT Gateway** was deployed to reduce operating costs. NAT Gateways incur **hourly charges** and are **not included in the AWS Free Tier**, making a single NAT Gateway a practical compromise for a learning environment.
 
 <p align="center">
-  <img src="Image 4 NAT gateway.PNG" alt="Architecture Diagram" width="1000"/>
+  <img src="Image 4 NAT gateway.png" alt="Architecture Diagram" width="1000"/>
 </p>
 
 *Figure 6: NAT Gateway created in a public subnet with an associated Elastic IP address*
