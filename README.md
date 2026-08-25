@@ -466,7 +466,7 @@ An internet-facing **Application Load Balancer** was then created in `the-orchar
   <img src="Image 11 ALB.png" alt="Architecture Diagram" width="1000"/>
 </p>
 
-*Figure 7: Application Load Balancer configuration — internet-facing, deployed in the-orchard-vpc.*
+*Figure 9: Application Load Balancer configuration — internet-facing, deployed in the-orchard-vpc.*
 
 | Setting | Value |
 |----------|-------|
@@ -526,7 +526,7 @@ An Auto Scaling Group was configured using the Launch Template above.
   <img src="Img 12 Lt.png" alt="Architecture Diagram" width="1000"/>
 </p>
 
-*Figure 11: Auto Scaling Group configuration, referencing the-orchard-app-lt launch template..*
+*Figure 10: Auto Scaling Group configuration, referencing the-orchard-app-lt launch template..*
 
 The Auto Scaling Group was configured with the following settings:
 
